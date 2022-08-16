@@ -1,13 +1,7 @@
 import tkinter
 from tkinter import ttk
 
-class Add:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-
-def add():
+def add_win(data):
     add_window = tkinter.Tk()
     add_window.title("Add New Crypto")
     window_width = 400
@@ -18,7 +12,14 @@ def add():
     center_y = int(screen_height / 2 - window_height / 2)
     # get screen dimension
     add_window.geometry(f'{window_width}x{window_height}+{center_x}+{center_y}')
-
+    window_buttons(add_window, data)
 
     add_window.mainloop()
 
+# add window layout
+
+def window_buttons(root, data):
+    crytpo_name = ttk.Label(root,text=data['name'])
+    crypto_price = ttk.Label(root, text=data['priceUsd'])
+    crytpo_name.pack()
+    crypto_price.pack()

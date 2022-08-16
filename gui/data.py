@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 def get_crypto_data():
@@ -30,3 +29,17 @@ def read_user_crypto():
         data = save_data.readline()
     save_data.close()
     return json.loads(data)
+
+def get_crypto_names():
+    data = get_crypto_datatxt()
+    cyptoNames = []
+    for item in data["data"]:
+        cyptoNames.append(item["name"])
+    cyptoNames.sort()
+    return cyptoNames
+
+def get_crypto_info(data,picked_crypto):
+    i = 0
+    while str(data["data"][i]["name"]) != str(picked_crypto):
+        i += 1
+    return data["data"][i]

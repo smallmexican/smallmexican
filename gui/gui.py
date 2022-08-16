@@ -1,16 +1,10 @@
 import tkinter
 from tkinter import ttk
-import data as conn
+import data
 import add as add
 
 # test request
-def get_crypto_names():
-    data = conn.get_crypto_datatxt()
-    cyptoNames = []
-    for item in data["data"]:
-        cyptoNames.append(item["name"])
-    cyptoNames.sort()
-    return cyptoNames
+
 # How to look through the data
 # print(data["data"][0]["id"])
 
@@ -19,7 +13,7 @@ root.title('Testing Window')
 
 pickedCrypto = tkinter.StringVar()
 comboCrypto = ttk.Combobox(root, textvariable=pickedCrypto)
-comboCrypto["values"] = get_crypto_names()
+comboCrypto["values"] = data.get_crypto_names()
 comboCrypto['state'] = 'readonly'
 
 comboCrypto.grid(column=0, columnspan=2,row=0, pady=10, padx=2)
@@ -46,34 +40,25 @@ style.configure('.', font=('Comic Sans', 12))
 
 # defining the entries as strings
 
-# username = tkinter.StringVar()
-# password = tkinter.StringVar()
 def update():
-    conn.update_main_data()
+    data.update_main_data()
     return print("Data Updated")
 
 def cancel():
     root.quit()
 
 
-def check_price(event):
+""" Keep this as an example of event binding
+    def check_price(event):
     # priceUsd
     # get the value of the coin from the name
-    data = conn.get_crypto_datatxt()
-    value = get_crypto_info(data)
+    crypto_data = data.get_crypto_datatxt()
+    value = data.get_crypto_info(crypto_data, pickedCrypto.get())
     value = value["priceUsd"]
     ttk.Label(root, text=f'The current price of your coin in £{round(float(value) * 0.83, 2)}').grid(column=0,columnspan=2)
 
-
-def get_crypto_info(data):
-    i = 0
-    while str(data["data"][i]["name"]) != str(pickedCrypto.get()):
-        i += 1
-    return data["data"][i]
-
-
-
-comboCrypto.bind('<<ComboboxSelected>>', check_price)
+#comboCrypto.bind('<<ComboboxSelected>>', check_price)
+"""
 # creating labels
 
 # user_lbl = ttk.Label(root, text="Username: ")
@@ -85,7 +70,7 @@ comboCrypto.bind('<<ComboboxSelected>>', check_price)
 
 # creating button
 
-add_btn = ttk.Button(root, text="Add", command= add.add)
+add_btn = ttk.Button(root, text="Add", default="disabled", command=lambda: add.add_win(data.get_crypto_info(data.get_crypto_datatxt(), pickedCrypto.get())))
 update_btn = ttk.Button(root, text="Update", command=update)
 cancel_btn = ttk.Button(root, text="Cancel", command=cancel)
 
