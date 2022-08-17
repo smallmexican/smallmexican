@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import ttk
 import data
-import add as add
+import add
 
 # test request
 
@@ -70,7 +70,7 @@ def cancel():
 
 # creating button
 
-add_btn = ttk.Button(root, text="Add", default="disabled", command=lambda: add.add_win(data.get_crypto_info(data.get_crypto_datatxt(), pickedCrypto.get())))
+add_btn = ttk.Button(root, text="Add", default="disabled", command=lambda: add.NewWindow(data.get_crypto_info(data.get_crypto_datatxt(), pickedCrypto.get())))
 update_btn = ttk.Button(root, text="Update", command=update)
 cancel_btn = ttk.Button(root, text="Cancel", command=cancel)
 
